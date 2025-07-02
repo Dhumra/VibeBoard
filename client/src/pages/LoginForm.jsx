@@ -16,6 +16,7 @@ function LoginForm() {
         password,
       });
       localStorage.setItem('token', res.data.token);
+      console.log(res.data.token);
       setMessage('Login successful!');
       navigate('/');
     } catch (err) {

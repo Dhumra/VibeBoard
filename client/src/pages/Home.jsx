@@ -38,7 +38,7 @@ function Home() {
     <div>
       <h1>Welcome to VibeBoard 🔥</h1>
       <CreatePostForm  onPostCreated = {() => setRefresh(prev => !prev)} />
-      <PostFeed posts={posts}/>
+      <PostFeed posts={posts} onVoted = {() => setRefresh(prev => !prev)} />
     </div>
   );
 }

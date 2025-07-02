@@ -1,6 +1,23 @@
 import React from 'react';
+import axios from 'axios';
 
-function PostFeed({ posts }) {
+function PostFeed({ posts, onVoted }) {
+
+  const token = localStorage.getItem("token");
+
+  const handleVote = async (postId, voteType) => {
+    try{
+      const res = await axios.post(`http://localhost:5007/api/posts/${postId}/vote`,
+      { voteType },
+      { headers: {Authorization: `Bearer ${token}`}}
+      );
+      onVoted();
+    }catch(err){
+       console.error("Vote failed:", err.response?.data || err.message);
+    }
+  };
+
+
   if (!posts) return <p>Loading posts...</p>;
 
   return (
@@ -14,10 +31,18 @@ function PostFeed({ posts }) {
             <h3>{post.title}</h3>
             {post.link && (
               <p>
-                🔗 <a href={post.link} target="_blank" rel="noopener noreferrer">{post.link}</a>
+                 <a href={post.link} target="_blank" rel="noopener noreferrer">{post.link}</a>
               </p>
             )}
             {post.content && <p>{post.content}</p>}
+            {token && (
+            <>
+              <p>Upvotes: {post.upvotes} | Downvotes: {post.downvotes}</p>
+              <button onClick={() => handleVote(post._id, 'upvote')}>⬆️</button>
+              <button onClick={() => handleVote(post._id, 'downvote')}>⬇️</button>
+            </>
+            )}
+
           </div>
         ))
       )}
