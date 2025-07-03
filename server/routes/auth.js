@@ -7,29 +7,29 @@ const auth = require("../middleware/Auth");
 router.get("/",  (req, res) => res.send("Auth route placeholder"));
 
 router.post("/register", async (req, res) => {
-    try{
-        console.log("Register route hit:", req.body);
-        const { username, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        
-        const newUser = new User({
-         username,
-         password: hashedPassword
-        });
+  const { username, password } = req.body;
 
-        await newUser.save();
+  try {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) return res.status(400).json({ error: "Username already taken" });
 
-        res.status(201).json({ message: "User registered successfully" });
-    }catch(err){
-        console.error(err);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ username, password: hashedPassword });
+    await user.save();
 
-        // Duplicate username error (MongoError code 11000)
-        if (err.code === 11000) {
-          return res.status(409).json({ error: "Username already exists" });
-        }
-
-        res.status(500).json({ error: "Server error" });
+    const JWT_SECRET = process.env.JWT_SECRET;
+    if (!JWT_SECRET) {
+        throw new Error("❌ JWT_SECRET is not defined in environment variables");
     }
+
+    // Create token on registration
+    const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET, { expiresIn: "1h" });
+
+    res.json({ token }); // send token back
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Registration failed" });
+  }
 });
 
 router.post('/login', async (req, res) => {

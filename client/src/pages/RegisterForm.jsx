@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function RegistrationForm() {
+function RegistrationForm( {setToken} ) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -17,7 +17,9 @@ function RegistrationForm() {
       });
       setMessage('Registration successful!');
       // After successful registration
-      navigate('/login');
+      localStorage.setItem('token', res.data.token);
+      setToken(res.data.token);
+      navigate('/');
       
     } catch (err) {
       setMessage(err.response?.data?.error || 'Registration failed');

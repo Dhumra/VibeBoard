@@ -1,19 +1,26 @@
 import React from 'react';
 import axios from 'axios';
 
-function PostFeed({ posts, onVoted }) {
+function PostFeed({ posts, onVoted, setToken, navigate }) {
 
   const token = localStorage.getItem("token");
 
   const handleVote = async (postId, voteType) => {
-    try{
-      const res = await axios.post(`http://localhost:5007/api/posts/${postId}/vote`,
-      { voteType },
-      { headers: {Authorization: `Bearer ${token}`}}
+    try {
+      await axios.post(`http://localhost:5007/api/posts/${postId}/vote`,
+        { voteType },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       onVoted();
-    }catch(err){
-       console.error("Vote failed:", err.response?.data || err.message);
+    } catch (err) {
+      if (err.response?.status === 401) {
+        console.error("Vote failed: Unauthorized");
+        localStorage.removeItem("token");
+        setToken(null);
+        navigate('/login');
+      } else {
+        console.error("Vote failed:", err.response?.data || err.message);
+      }
     }
   };
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function LoginForm() {
+function LoginForm( {setToken} ) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -16,12 +16,14 @@ function LoginForm() {
         password,
       });
       localStorage.setItem('token', res.data.token);
+      setToken(res.data.token);
       console.log(res.data.token);
       setMessage('Login successful!');
       navigate('/');
     } catch (err) {
       setMessage(err.response?.data?.error || 'Login failed');
-      navigate('/register');
+      localStorage.removeItem('token');
+      setToken(null);
     }
   };
 
@@ -45,6 +47,7 @@ function LoginForm() {
       <button type="submit">Login</button>
       {message && <p>{message}</p>}
     </form>
+
   );
 }
 

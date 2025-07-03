@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function CreatePostForm({onPostCreated}) {
+function CreatePostForm({onPostCreated, setToken, navigate}) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [link, setLink] = useState('');
@@ -10,27 +10,28 @@ function CreatePostForm({onPostCreated}) {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.post('http://localhost:5007/api/posts', 
-        {title, content, link },
-        {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-        }
-    );
-    alert("✅ Post created!");
-    console.log('Post added successful!');
-    setTitle('');
-    setContent('');
-    setLink('');
-    if(onPostCreated){
-       onPostCreated();
-    }
+      await axios.post('http://localhost:5007/api/posts',
+        { title, content, link },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert("✅ Post created!");
+      setTitle('');
+      setContent('');
+      setLink('');
+      if (onPostCreated) onPostCreated();
     } catch (err) {
-    console.log(err.response?.data?.error || 'Login failed');
+      if (err.response?.status === 401) {
+        console.error("Post failed: Unauthorized");
+        localStorage.removeItem("token");
+        setToken(null);
+        navigate('/login');
+      } else {
+        console.error("Post error:", err.response?.data || err.message);
+      }
     }
   };
 
+  
   return (
     <form onSubmit={handleSubmit}>
       <h2>Create a post</h2>

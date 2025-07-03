@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import CreatePostForm from '../components/CreatePostForm';
 import PostFeed from '../components/PostFeed';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
-function Home() {
 
-   const token = localStorage.getItem('token');
+function Home( {token , setToken} ) {
+
+  //  const token = localStorage.getItem('token');
    const [posts, setPosts] = useState([]);
    const [refresh, setRefresh] = useState(false);
+   const navigate = useNavigate();
 
    useEffect(() => {
         
@@ -25,6 +28,13 @@ function Home() {
         fetchPosts();
     }, [refresh]);  //re-fetch every time refresh changes
 
+
+    const handleLogout = () => {
+       localStorage.removeItem("token");
+       setToken(null);
+       navigate("/");
+    };
+
     if(!token){
       return (
         <div>
@@ -37,8 +47,9 @@ function Home() {
   return (
     <div>
       <h1>Welcome to VibeBoard 🔥</h1>
-      <CreatePostForm  onPostCreated = {() => setRefresh(prev => !prev)} />
-      <PostFeed posts={posts} onVoted = {() => setRefresh(prev => !prev)} />
+      <button onClick={handleLogout} >Logout</button>
+      <CreatePostForm  onPostCreated = {() => setRefresh(prev => !prev)} setToken={setToken} navigate={navigate}/>
+      <PostFeed posts={posts} onVoted = {() => setRefresh(prev => !prev)} setToken={setToken} navigate={navigate}/>
     </div>
   );
 }
