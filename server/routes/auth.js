@@ -7,7 +7,6 @@ const auth = require("../middleware/Auth");
 router.get("/",  (req, res) => res.send("Auth route placeholder"));
 
 router.get("/me", (req, res) => {
-  console.log("hittt");
   const token = req.headers.authorization?.split(" ")[1]; // "Bearer <token>"
   if (!token) return res.status(401).json({ error: "No token" });
 
@@ -32,7 +31,7 @@ router.post("/register", async (req, res) => {
 
     const JWT_SECRET = process.env.JWT_SECRET;
     if (!JWT_SECRET) {
-        throw new Error("❌ JWT_SECRET is not defined in environment variables");
+        throw new Error(" JWT_SECRET is not defined in environment variables");
     }
 
     // Create token on registration
@@ -63,7 +62,7 @@ router.post('/login', async (req, res) => {
 
         const JWT_SECRET = process.env.JWT_SECRET;
         if (!JWT_SECRET) {
-            throw new Error("❌ JWT_SECRET is not defined in environment variables");
+            throw new Error(" JWT_SECRET is not defined in environment variables");
         }
 
         // 3. Sign JWT token
