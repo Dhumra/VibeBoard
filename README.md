@@ -172,7 +172,7 @@ Each user has a JWT token stored in `localStorage`. On login or reload, the app 
 
 ---
 
-## 🌍 Deployment (Optional) :
+## 🌍 Deployment :
 
 - **Frontend**: [Vercel](https://vibe-board.vercel.app/)
 - **Backend**: [Render](https://vibeboard-4w42.onrender.com)
