@@ -142,6 +142,24 @@ Your frontend will run at `http://localhost:5173`
 Each user has a JWT token stored in `localStorage`. On login or reload, the app sends the token to the backend to retrieve user info (including `isAdmin` status), which is used to conditionally render the **Admin Panel** button.
 
 ---
+## 👑 Admin Access
+
+VibeBoard includes a basic admin panel that allows authorized users to delete inappropriate posts from the community feed.
+
+To explore admin functionality, you can log in with the following pre-configured admin account:
+
+```bash
+Username: Dhum  
+Password: 1234
+```
+⚠️ Security Note: For demonstration purposes, the credentials are public. In a production system, admin access should be securely managed and protected with proper user roles and permission controls.
+
+🔐 How Admin Access Works
+	•	Upon login, the backend generates a JWT token that includes the isAdmin flag.
+	•	The frontend checks this flag to display the Admin Panel button.
+	•	Only users with admin rights can see and access the panel or perform delete operations on posts.
+
+---
 
 ## 🔄 Post Feed Logic
 
