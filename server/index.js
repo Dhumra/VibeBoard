@@ -14,8 +14,10 @@ mongoose.connect(process.env.MONGO_URI)
 .catch((err) => console.log("MongoDB error: ", err));
 
 app.use(cors({
-  origin: "*"
+  origin: 'https://vibe-board.vercel.app', // replace this
+  credentials: true,
 }));
+
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
