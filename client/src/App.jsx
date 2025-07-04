@@ -7,7 +7,7 @@ import Login from './pages/LoginForm';
 import LandingPage from './pages/LandingPage';
 import Admin from'./pages/Admin';
 import { useState, useEffect } from "react";
-import API from '../api/axios';
+import API from './api/axios';
 
 
 function App() {
