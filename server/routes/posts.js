@@ -15,12 +15,6 @@ router.get("/", async (req, res) => {
     }
 });
 
-// Get details about the user using their genrated token
-// router.get("/me", auth, (req, res) => {
-//   const { id, username, isAdmin } = req.user;
-//   res.json({ id, username, isAdmin });
-// });
-
 
 // Delete particular post (only by admin)
 router.delete("/:id", auth, async (req, res) => {

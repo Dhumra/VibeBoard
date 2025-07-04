@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import API from '../api/axios';
 
 function CreatePostForm({onPostCreated, setToken, navigate}) {
   const [title, setTitle] = useState('');
@@ -10,11 +11,11 @@ function CreatePostForm({onPostCreated, setToken, navigate}) {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.post('http://localhost:5009/api/posts',
+      await API.post('/posts',
         { title, content, link },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("✅ Post created!");
+      alert(" Post created!");
       setTitle('');
       setContent('');
       setLink('');

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import API from '../api/axios';
 
 function LoginForm( {setToken} ) {
   const [username, setUsername] = useState('');
@@ -12,7 +13,7 @@ function LoginForm( {setToken} ) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5009/api/auth/login', {
+      const res = await API.post('/auth/login', {
         username,
         password,
       });

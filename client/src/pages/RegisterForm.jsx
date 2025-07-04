@@ -13,7 +13,7 @@ function RegistrationForm( {setToken} ) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5009/api/auth/register', {
+      const res = await API.post('/auth/register', {
         username,
         password,
       });

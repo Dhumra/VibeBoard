@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import API from '../api/axios';
 
 function Admin({ setToken }) {
 
@@ -14,7 +15,7 @@ function Admin({ setToken }) {
   useEffect( () => {
     const fetchPosts = async () => {
        try {
-       const res = await axios.get(`http://localhost:5009/api/posts`,
+       const res = await API.get(`/posts`,
         { headers: { Authorization: `Bearer ${token}` } }
        );
        setPosts(res.data);
@@ -28,7 +29,7 @@ function Admin({ setToken }) {
 
   const deletePost = async (postId) => {
     try {
-      await axios.delete(`http://localhost:5009/api/posts/${postId}/`,
+      await API.delete(`/posts/${postId}/`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setRefresh(prev => !prev);
@@ -98,36 +99,3 @@ function Admin({ setToken }) {
 
 export default Admin;
 
-
-
-
-//  <div className="mt-4 space-y-6">
-//       <h2 className="text-2xl font-bold text-gray-700 mb-4">Community Feeds 🌐</h2>
-//       {posts.length === 0 ? (
-//         <p className="text-gray-500">No posts yet.</p>
-//       ) : (
-//         posts.map(post => (
-//           <div
-//             key={post._id}
-//             className="bg-white border border-gray-200 rounded-lg shadow-sm p-5"
-//           >
-//             <h3 className="text-xl font-semibold text-gray-800">{post.title}</h3>
-//             {post.link && (
-//               <p className="text-blue-500 hover:underline">
-//                 <a href={post.link} target="_blank" rel="noopener noreferrer">
-//                   {post.link}
-//                 </a>
-//               </p>
-//             )}
-//             {post.content && <p className="text-gray-600 mt-2">{post.content}</p>}
-
-//             <button
-//                   onClick={() => deletePost(post._id)}
-//                   className="!bg-red-500 !text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
-//                 >
-//                   Delete
-//                 </button>
-//           </div>
-//         ))
-//       )}
-//     </div>

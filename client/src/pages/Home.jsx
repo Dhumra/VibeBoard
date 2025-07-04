@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Tab } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
+import API from '../api/axios';
 import CreatePostForm from "../components/CreatePostForm";
 import PostFeed from "../components/PostFeed";
 
@@ -20,7 +19,7 @@ export default function Home({ user, token, setToken }) {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get("http://localhost:5009/api/posts", {
+        const res = await API.get("/posts", {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("Fetched posts:", res.data);

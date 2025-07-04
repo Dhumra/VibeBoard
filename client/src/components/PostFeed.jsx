@@ -1,14 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import { BiSolidUpvote, BiSolidDownvote } from "react-icons/bi";
+import API from '../api/axios';
 
 function PostFeed({ posts, onVoted, setToken, navigate }) {
   const token = localStorage.getItem("token");
 
   const handleVote = async (postId, voteType) => {
     try {
-      await axios.post(
-        `http://localhost:5009/api/posts/${postId}/vote`,
+      await API.post(
+        `/posts/${postId}/vote`,
         { voteType },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -77,22 +78,3 @@ function PostFeed({ posts, onVoted, setToken, navigate }) {
 
 export default PostFeed;
 
-
-
-
-              // <div className="mt-4 flex items-center space-x-6">
-              //   <div
-              //     className="flex items-center space-x-1 cursor-pointer hover:scale-105 transition"
-              //     onClick={() => handleVote(post._id, "upvote")}
-              //   >
-              //     <BiSolidUpvote className="text-green-500 text-2xl" />
-              //     <span className="text-gray-700 font-medium">{post.upvotes}</span>
-              //   </div>
-              //   <div
-              //     className="flex items-center space-x-1 cursor-pointer hover:scale-105 transition"
-              //     onClick={() => handleVote(post._id, "downvote")}
-              //   >
-              //     <BiSolidDownvote className="text-red-500 text-2xl" />
-              //     <span className="text-gray-700 font-medium">{post.downvotes}</span>
-              //   </div>
-              // </div>
