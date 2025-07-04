@@ -63,6 +63,14 @@ vibeboard/
 
 ---
 
+## 🌍 Deployment :
+
+- **Frontend**: [Vercel](https://vibe-board.vercel.app/)
+- **Backend**: [Render](https://vibeboard-4w42.onrender.com)
+
+
+---
+
 ## 📦 Getting Started
 
 ### 1. Clone the repository
@@ -187,13 +195,6 @@ Password: 1234
 - After login, `App.jsx` loads the token and user data
 - After post creation, voting, or deletion, the component refreshes the post feed automatically
 - `useEffect` handles token verification on reloads
-
----
-
-## 🌍 Deployment :
-
-- **Frontend**: [Vercel](https://vibe-board.vercel.app/)
-- **Backend**: [Render](https://vibeboard-4w42.onrender.com)
 
 ---
 
