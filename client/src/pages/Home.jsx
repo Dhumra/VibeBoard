@@ -44,6 +44,7 @@ export default function Home({ user, token, setToken }) {
   };
 
   if (!token) {
+    console.log("API base URL:", import.meta.env.VITE_API_URL);
     return (
       <div className="p-6 text-center">
         <h2 className="text-2xl font-bold text-gray-800">Welcome to VibeBoard 🔐</h2>
