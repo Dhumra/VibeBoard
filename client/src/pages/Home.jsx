@@ -43,8 +43,9 @@ export default function Home({ user, token, setToken }) {
     navigate("/login");
   };
 
+  //Should i remove this  ?? ========== =======================
   if (!token) {
-    console.log("API base URL:", import.meta.env.VITE_API_URL);
+    
     return (
       <div className="p-6 text-center">
         <h2 className="text-2xl font-bold text-gray-800">Welcome to VibeBoard 🔐</h2>
@@ -55,6 +56,7 @@ export default function Home({ user, token, setToken }) {
       </div>
     );
   }
+  // ======================== =========================
 
   return (
   <div className="min-h-screen w-screen bg-gradient-to-r from-blue-500 via-orange-400 to-red-500 px-4 py-8">

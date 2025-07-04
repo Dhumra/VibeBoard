@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function LandingPage() {
+  console.log("API base URL:", import.meta.env.VITE_API_URL);
   return (
     <div className="w-screen h-screen bg-gradient-to-r from-blue-500 via-orange-400 to-red-500 px-6 py-12">
       <div className="w-full h-full bg-white shadow-2xl rounded-none p-10 flex flex-col justify-center items-center text-center">
