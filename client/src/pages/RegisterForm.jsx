@@ -12,22 +12,24 @@ function RegistrationForm( {setToken} ) {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await API.post('/auth/register', {
-        username,
-        password,
-      });
-      setMessage('Registration successful!');
-      // After successful registration
-      localStorage.setItem('token', res.data.token);
-      setToken(res.data.token);
-      navigate('/');
-      
-    } catch (err) {
-      setMessage(err.response?.data?.error || 'Registration failed');
-    }
-  };
+  e.preventDefault();
+  console.log("Form submitted with:", { username, password }); // 👈 Add this
+  try {
+    const res = await API.post('/auth/register', {
+      username,
+      password,
+    });
+    console.log("API response:", res); // 👈 Add this
+    setMessage('Registration successful!');
+    localStorage.setItem('token', res.data.token);
+    setToken(res.data.token);
+    navigate('/');
+  } catch (err) {
+    console.error("Registration error:", err); // 👈 Add this
+    setMessage(err.response?.data?.error || 'Registration failed');
+  }
+};
+
 
   return (
 <div className="w-screen h-screen bg-gradient-to-r from-blue-500 via-orange-400 to-red-500 px-6 py-12">

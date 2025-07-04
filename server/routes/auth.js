@@ -19,6 +19,7 @@ router.get("/me", (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
+  console.log("register method hit");
   const { username, password } = req.body;
 
   try {
