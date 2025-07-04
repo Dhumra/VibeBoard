@@ -1,9 +1,11 @@
 const router = require("express").Router();
 const auth = require("../middleware/Auth");
 const Post = require("../models/Post");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
-
-router.get("/", async (req, res) => {      //get all posts
+// Get all posts from Db
+router.get("/", async (req, res) => {      
     try{
       const posts = await Post.find().sort({ upvotes: -1, createdAt: -1 });
       res.json(posts);
@@ -13,7 +15,40 @@ router.get("/", async (req, res) => {      //get all posts
     }
 });
 
-router.post("/", auth, async (req, res) => {      // create a new post
+// Get details about the user using their genrated token
+// router.get("/me", auth, (req, res) => {
+//   const { id, username, isAdmin } = req.user;
+//   res.json({ id, username, isAdmin });
+// });
+
+
+// Delete particular post (only by admin)
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    //Admin Check
+    if (!req.user.isAdmin) {
+      return res.status(403).json({ error: "Forbidden: Admins only" });
+    }
+
+    const postId = req.params.id;
+
+    //Find and Delete the Post
+    const deletedPost = await Post.findByIdAndDelete(postId);
+
+    if (!deletedPost) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    res.json({ message: "Post deleted successfully" });
+
+  } catch (err) {
+    console.error("Delete error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// Create a new post
+router.post("/", auth, async (req, res) => {      
     try {
         const { title, content, link } = req.body;
         const newPost = new Post({ title, content, link, user: req.user.id });
@@ -25,6 +60,7 @@ router.post("/", auth, async (req, res) => {      // create a new post
     }
 });
 
+// Upvote/Downvote a Post
 router.post("/:id/vote", auth, async (req, res) => {
     // userId is acquired from jwt token
     // id belongs to id of the post on which i am operating on
@@ -79,6 +115,9 @@ router.post("/:id/vote", auth, async (req, res) => {
     }
   
 });
+
+
+
 
 
 
