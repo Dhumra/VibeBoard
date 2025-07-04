@@ -7,6 +7,7 @@ import Login from './pages/LoginForm';
 import LandingPage from './pages/LandingPage';
 import Admin from'./pages/Admin';
 import { useState, useEffect } from "react";
+import API from '../api/axios';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
       setToken(savedToken);
 
       if (savedToken) {
-      axios.get('http://localhost:5009/api/auth/me', {
+      API.get('/auth/me', {
       headers: { Authorization: `Bearer ${savedToken}` }
     })
     
