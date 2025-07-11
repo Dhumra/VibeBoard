@@ -7,6 +7,9 @@
 
 **VibeBoard** is a modern, scalable community platform that enables users to register, share posts, vote, and engage within a Reddit-style interface. Built with React, Node.js, Express, and MongoDB, it offers a robust architecture designed for growth and customization.
 
+
+<img width="1212" height="752" alt="Image" src="https://github.com/user-attachments/assets/9ecd520d-02be-4405-a800-73f579c63d4f" />
+
 ---
 
 ## 🚀 Why VibeBoard?
